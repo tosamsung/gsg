@@ -1,0 +1,143 @@
+import { createUIWebsite } from "./Helper";
+const IFRAME_URL = import.meta.env.VITE_IFRAME_URL
+
+
+
+export function listCrops() {
+    let width = "70vw"
+    let height = "75vh"
+    let vertical = "middle" as "middle" | "top" | "bottom"
+    let horizontal = "middle" as "middle" | "left" | "right"
+    const screenSize = WA.player.state.screen
+    switch (screenSize) {
+        case "mobile":
+            width = "98vw"
+            height = "80vh"
+            vertical="top"
+            break;
+        case "tablet":
+            break;
+        case "desktop":
+            vertical = "middle"
+            break;
+        default:
+            break;
+    }
+    console.log(width);
+    return createUIWebsite(
+        "listCrops",
+        IFRAME_URL + "/2/crop",
+        vertical,
+        horizontal,
+        width,
+        height
+    )
+}
+
+export function confirmPlant(varietyId: string) {
+    let width = "70vw"
+    let height = "90vh"
+    let vertical = "top" as "middle" | "top" | "bottom"
+    let horizontal = "middle" as "middle" | "left" | "right"
+    const screenSize = WA.player.state.screen
+    switch (screenSize) {
+        case "mobile":
+            width = "98vw"
+            height = "75vh"
+            break;
+        case "tablet":
+            width = "90vw"
+            break;
+        case "desktop":
+            break;
+        default:
+            break;
+    }
+    // console.log(screenSize);
+
+    // console.log(width);
+
+    return createUIWebsite(
+        "confirmPlant",
+        IFRAME_URL + `/confirm/plant/${varietyId}`,
+        vertical,
+        horizontal,
+        width,
+        height
+    )
+}
+
+export function baseUrl() {
+    let width = "100vw"
+    let height = "100vh"
+    let vertical = "top" as "middle" | "top" | "bottom"
+    let horizontal = "left" as "middle" | "left" | "right"
+    let visible = false
+    return createUIWebsite(
+        "baseUrl",
+        IFRAME_URL,
+        vertical,
+        horizontal,
+        width,
+        height,
+        visible
+    )
+}
+
+export function warning(message: string) {
+    let width = "70vw"
+    let height = "90vh"
+    let vertical = "middle" as "middle" | "top" | "bottom"
+    let horizontal = "middle" as "middle" | "left" | "right"
+    const screenSize = WA.player.state.screen
+    switch (screenSize) {
+        case "mobile":
+            width = "98vw"
+            height = "75vh"
+            break;
+        case "tablet":
+            width = "90vw"
+            break;
+        case "desktop":
+            break;
+        default:
+            break;
+    }
+    return createUIWebsite(
+        "warning",
+        IFRAME_URL + `/warning?message=${message}`,
+        vertical,
+        horizontal,
+        width,
+        height
+    )
+}
+export function bedDetail(bedId: string) {
+    let width = "70vw"
+    let height = "90vh"
+    let vertical = "top" as "middle" | "top" | "bottom"
+    let horizontal = "middle" as "middle" | "left" | "right"
+    const screenSize = WA.player.state.screen
+    switch (screenSize) {
+        case "mobile":
+            width = "98vw"
+            height = "75vh"
+            break;
+        case "tablet":
+            width = "90vw"
+            break;
+        case "desktop":
+            break;
+        default:
+            break;
+    }
+
+    return createUIWebsite(
+        "bedDetail",
+        IFRAME_URL + `/bed/${bedId}`,
+        vertical,
+        horizontal,
+        width,
+        height
+    )
+}

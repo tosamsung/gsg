@@ -1,23 +1,51 @@
 /// <reference types="@workadventure/iframe-api-typings" />
 
+import { Popup } from "@workadventure/iframe-api-typings";
+import "./roofs";
+
+
 import { bootstrapExtra } from "@workadventure/scripting-api-extra";
 
-console.log('Script started successfully');
+let popupPrivateOffice: Popup|null;
 
-let currentPopup: any = undefined;
+(async () => {
+    await WA.onInit();
+    await WA.players.configureTracking({
+      players: true,
+      movement: false,
+    });
+    await WA.player.getPosition();
+})();
 
 // Waiting for the API to be ready
 WA.onInit().then(() => {
-    console.log('Scripting API ready');
-    console.log('Player tags: ',WA.player.tags)
+    const userTag = WA.player.tags;
 
-    WA.room.area.onEnter('clock').subscribe(() => {
-        const today = new Date();
-        const time = today.getHours() + ":" + today.getMinutes();
-        currentPopup = WA.ui.openPopup("clockPopup", "It's " + time, []);
+    // If user is admin, name it with a dark blue border
+    if(userTag.includes("admin")) {
+        WA.player.setOutlineColor(27, 42, 65);
+    }
+
+    WA.room.onLeaveLayer("start").subscribe(() => {
+        WA.ui.modal.closeModal();
+    });
+
+    // Open & Close popupPrivateOffice
+    WA.room.area.onEnter("popupPrivateOffice_area").subscribe(() => {
+        if(popupPrivateOffice) return;
+        popupPrivateOffice = WA.ui.openPopup("popupPrivateOffice", "Our private office serves as a restricted zone, exclusively accessible to our team members.", [{
+            label: "Close",
+            className: "primary",
+            callback: () => {
+                popupPrivateOffice?.close();
+                popupPrivateOffice = null;
+            }
+        }]);
+    });
+    WA.room.area.onLeave("popupPrivateOffice_area").subscribe(() => {
+        popupPrivateOffice?.close();
+        popupPrivateOffice = null;
     })
-
-    WA.room.area.onLeave('clock').subscribe(closePopup)
 
     // The line below bootstraps the Scripting API Extra library that adds a number of advanced properties/features to WorkAdventure
     bootstrapExtra().then(() => {
@@ -25,12 +53,5 @@ WA.onInit().then(() => {
     }).catch(e => console.error(e));
 
 }).catch(e => console.error(e));
-
-function closePopup(){
-    if (currentPopup !== undefined) {
-        currentPopup.close();
-        currentPopup = undefined;
-    }
-}
 
 export {};
