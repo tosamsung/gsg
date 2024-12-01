@@ -1,4 +1,4 @@
-import { TileData } from "@/entity/TileData";
+import { TileData } from "../entity/TileData";
 import { Area } from "../entity/Area"; // Assuming Area is defined elsewhere
 
 /**

@@ -1,4 +1,4 @@
-import Bed from "@/entity/Bed";
+import Bed from "../entity/Bed";
 import ApiManager from "../api/ApiManager";
 
 export default class BedService {

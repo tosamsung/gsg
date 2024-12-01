@@ -1,5 +1,5 @@
-import { Area } from "@/entity/Area";
-import { MovementState } from "@/entity/MovementState";
+import { Area } from "../entity/Area";
+import { MovementState } from "../entity/MovementState";
 import { EmbedWebsiteService } from "../service/EmbedWebsiteService";
 import { CreateEmbeddedWebsiteEvent, UIWebsiteEvent } from "@workadventure/iframe-api-typings";
 
