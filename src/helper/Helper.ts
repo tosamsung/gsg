@@ -21,38 +21,38 @@ export async function createArea(area: Area, name: string, property?: Map<string
         }
     }
 }
-export function subscribeOnEnterArea(name: string, callback: () => void){
+export function subscribeOnEnterArea(name: string, callback: () => void) {
 
     WA.room.area.onEnter(name).subscribe().unsubscribe()
     WA.room.area.onEnter(name).subscribe(callback)
     // WA.room.area.onEnter(name).subscribe(()=>{
     //     console.log(1);
-        
+
     // })
 
 }
-export function subscribeOnLeaveArea(name: string, callback: () => void){
+export function subscribeOnLeaveArea(name: string, callback: () => void) {
     WA.room.area.onLeave(name).subscribe(callback)
 }
 export function getLandNumberFromUrl(url: string) {
-    const match = url.match(/land(\d+)/); 
+    const match = url.match(/land(\d+)/);
     if (match) {
-        return parseInt(match[1], 10); 
+        return parseInt(match[1], 10);
     }
-    return null; 
+    return null;
 }
 export function extractNumberFromString(input: string): number | null {
-    const match = input.match(/\d+/); 
-    return match ? parseInt(match[0], 10) : null; 
+    const match = input.match(/\d+/);
+    return match ? parseInt(match[0], 10) : null;
 }
 
 export function createEmbedWebsite(
-    name: string, 
-    url: string, 
-    x: number, 
-    y: number, 
-    height: number, 
-    width: number, 
+    name: string,
+    url: string,
+    x: number,
+    y: number,
+    height: number,
+    width: number,
     scale: number
 ): CreateEmbeddedWebsiteEvent {
     return {
@@ -78,7 +78,13 @@ export function createUIWebsite(
     height: string,
     visible: boolean = true,
     allowApi: boolean = true,
-    allowPolicy: string = ""
+    allowPolicy: string = "",
+    margin?: {
+        top?: string,
+        bottom?: string,
+        right?: string,
+        left?: string
+    }
 ): UIWebsiteEvent {
     return {
         id: id,
@@ -91,6 +97,7 @@ export function createUIWebsite(
             width: width,
             height: height,
         },
+        margin,
         visible: visible,
         allowApi: allowApi,
         allowPolicy: allowPolicy,
@@ -98,7 +105,7 @@ export function createUIWebsite(
 }
 
 
-export function teleportByLastDirection (pixel: number): void {
+export function teleportByLastDirection(pixel: number): void {
     const playerMoved = WA.player.state.playerMoved as MovementState
     // console.log(playerMoved);
 
@@ -118,8 +125,8 @@ export function teleportByLastDirection (pixel: number): void {
     }
 }
 
-export function checkDeviceScreen(){
-    const embedWebsiteService=new EmbedWebsiteService()
+export function checkDeviceScreen() {
+    const embedWebsiteService = new EmbedWebsiteService()
     embedWebsiteService.openWebsiteBaseUrl()
     embedWebsiteService.closeBaseUrl()
 }

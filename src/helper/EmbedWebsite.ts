@@ -36,9 +36,13 @@ export function listCrops() {
 
 export function confirmPlant(varietyId: string) {
     let width = "70vw"
-    let height = "90vh"
-    let vertical = "top" as "middle" | "top" | "bottom"
+    let height = "80vh"
+    let vertical = "middle" as "middle" | "top" | "bottom"
     let horizontal = "middle" as "middle" | "left" | "right"
+    let margin={
+        bottom:"100px"
+    }
+    // let allowPolicy="allowPolicy"
     const screenSize = WA.player.state.screen
     switch (screenSize) {
         case "mobile":
@@ -63,7 +67,11 @@ export function confirmPlant(varietyId: string) {
         vertical,
         horizontal,
         width,
-        height
+        height,
+        true, // visible is true by default, but you can pass it explicitly if needed
+        true, // allowApi is true by default
+        "", // allowPolicy is empty string by default
+        margin
     )
 }
 

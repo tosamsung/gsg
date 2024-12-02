@@ -13,7 +13,7 @@ export class EmbedWebsiteService {
         this.websiteConfirmPlant = null
         this.websiteBaseUrl = null
         this.websiteWarning = null
-        this.websiteBedDetail=null
+        this.websiteBedDetail = null
         this.initVariable()
         this.subscribeVariableChange()
     }
@@ -23,9 +23,8 @@ export class EmbedWebsiteService {
         );
 
     }
-    closeListCrop() {
+    async closeListCrop() {
         this.websiteListCrop?.close()
-
     }
     async openConfirmPlant(varietyId: string) {
         this.websiteConfirmPlant = await WA.ui.website.open(
