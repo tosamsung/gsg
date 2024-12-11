@@ -1,0 +1,120 @@
+{
+    "tomato": {
+        "1": [
+            "tomato1"
+        ],
+        "2": [
+            "tomato2"
+        ],
+        "3": [
+            "tomato3",
+            "tomato3.1"
+        ],
+        "4": [
+            "tomato4",
+            "tomato4.1"
+        ]
+    },
+    "chili_pepper": {
+        "1": [
+            "pepper1"
+        ],
+        "2": [
+            "pepper2"
+        ],
+        "3": [
+            "pepper3",
+            "pepper3.1"
+        ],
+        "4": [
+            "pepper4",
+            "pepper4.1"
+        ]
+    },
+    "corn": {
+        "1": [
+            "corn1"
+        ],
+        "2": [
+            "corn2"
+        ],
+        "3": [
+            "corn3",
+            "corn3.1"
+        ],
+        "4": [
+            "corn4",
+            "corn4.1"
+        ]
+    },
+    "cucumber": {
+        "1": [
+            "cucumber1"
+        ],
+        "2": [
+            "cucumber2"
+        ],
+        "3": [
+            "cucumber3"
+        ],
+        "4": [
+            "cucumber4"
+        ]
+    },
+    "potato": {
+        "1": [
+            "potato1"
+        ],
+        "2": [
+            "potato2"
+        ],
+        "3": [
+            "potato3"
+        ],
+        "4": [
+            "potato4"
+        ]
+    },
+    "melon": {
+        "1": [
+            "melon1"
+        ],
+        "2": [
+            "melon2"
+        ],
+        "3": [
+            "melon3"
+        ],
+        "4": [
+            "melon4"
+        ]
+    },
+    "carrot": {
+        "1": [
+            "carrot1"
+        ],
+        "2": [
+            "carrot2"
+        ],
+        "3": [
+            "carrot3"
+        ],
+        "4": [
+            "carrot4"
+        ]
+    },
+    "cabbage": {
+        "1": [
+            "cabbage1"
+        ],
+        "2": [
+            "cabbage2"
+        ],
+        "3": [
+            "cabbage2"
+        ],
+        "4": [
+            "cabbage3"
+        ]
+    }
+}
