@@ -1,119 +1,179 @@
 {
+    "plow": {
+        "width": 3,
+        "height": 2,
+        "plow1": [
+            [
+                "plow1.0",
+                "plow1.1",
+                "plow1.2"
+            ],
+            [
+                "plow1.3",
+                "plow1.4",
+                "plow1.5"
+            ]
+        ],
+        "plow2": [
+            [
+                "plow2.0",
+                "plow2.1",
+                "plow2.2"
+            ],
+            [
+                "plow2.3",
+                "plow2.4",
+                "plow2.5"
+            ]
+        ],
+        "plow3": [
+            [
+                "plow3.0",
+                "plow3.1",
+                "plow3.2"
+            ],
+            [
+                "plow3.3",
+                "plow3.4",
+                "plow3.5"
+            ]
+        ]
+    },
+    "chicken": {
+        "animation": {
+            "run": {
+                "width": 2,
+                "height": 1,
+                "_1": [
+                    [
+                        "chicken_run1.0",
+                        "chicken_run1.1"
+                    ]
+                ],
+                "_2": [
+                    [
+                        "chicken_run2.0",
+                        "chicken_run2.1"
+                    ]
+                ]
+            }
+        }
+    },
     "tomato": {
-        "1": [
+        "_1": [
             "tomato1"
         ],
-        "2": [
+        "_2": [
             "tomato2"
         ],
-        "3": [
+        "_3": [
             "tomato3",
             "tomato3.1"
         ],
-        "4": [
+        "_4": [
             "tomato4",
             "tomato4.1"
         ]
     },
     "chili_pepper": {
-        "1": [
+        "_1": [
             "pepper1"
         ],
-        "2": [
+        "_2": [
             "pepper2"
         ],
-        "3": [
+        "_3": [
             "pepper3",
             "pepper3.1"
         ],
-        "4": [
+        "_4": [
             "pepper4",
             "pepper4.1"
         ]
     },
     "corn": {
-        "1": [
+        "_1": [
             "corn1"
         ],
-        "2": [
+        "_2": [
             "corn2"
         ],
-        "3": [
+        "_3": [
             "corn3",
             "corn3.1"
         ],
-        "4": [
+        "_4": [
             "corn4",
             "corn4.1"
         ]
     },
     "cucumber": {
-        "1": [
+        "_1": [
             "cucumber1"
         ],
-        "2": [
+        "_2": [
             "cucumber2"
         ],
-        "3": [
+        "_3": [
             "cucumber3"
         ],
-        "4": [
+        "_4": [
             "cucumber4"
         ]
     },
     "potato": {
-        "1": [
+        "_1": [
             "potato1"
         ],
-        "2": [
+        "_2": [
             "potato2"
         ],
-        "3": [
+        "_3": [
             "potato3"
         ],
-        "4": [
+        "_4": [
             "potato4"
         ]
     },
     "melon": {
-        "1": [
+        "_1": [
             "melon1"
         ],
-        "2": [
+        "_2": [
             "melon2"
         ],
-        "3": [
+        "_3": [
             "melon3"
         ],
-        "4": [
+        "_4": [
             "melon4"
         ]
     },
     "carrot": {
-        "1": [
+        "_1": [
             "carrot1"
         ],
-        "2": [
+        "_2": [
             "carrot2"
         ],
-        "3": [
+        "_3": [
             "carrot3"
         ],
-        "4": [
+        "_4": [
             "carrot4"
         ]
     },
     "cabbage": {
-        "1": [
+        "_1": [
             "cabbage1"
         ],
-        "2": [
+        "_2": [
             "cabbage2"
         ],
-        "3": [
+        "_3": [
             "cabbage2"
         ],
-        "4": [
+        "_4": [
             "cabbage3"
         ]
     }

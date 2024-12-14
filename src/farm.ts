@@ -8,6 +8,7 @@ import "./settings/DefaultSetup"
 const landController = new LandController()
 
 WA.onInit().then(async () => {
+    localStorage.setItem("farm", import.meta.env.VITE_FARM_ID)
     landController.createLandAreas()
     bootstrapExtra().then(() => {
         console.log('Scripting API Extra ready');

@@ -9,6 +9,7 @@ export default class AuthController {
     start() {
         this.initVariable()
         this.subscribeVariableChange()
+        this.auth()
     }
     private initVariable() {
         WA.player.state.saveVariable('logout', false);
@@ -18,9 +19,7 @@ export default class AuthController {
         WA.player.state.onVariableChange("logout").subscribe((e) => {
             e ? this.logout() : undefined
         })
-        WA.player.state.onVariableChange("auth").subscribe((e) => {
-            e ? this.auth() : undefined
-        })
+
     }
     private auth() {
         WA.player.state.DIGIFORCE_TOKEN = localStorage.getItem("DIGIFORCE_TOKEN")

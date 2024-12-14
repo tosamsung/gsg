@@ -1,6 +1,7 @@
 // plot.ts
 
 import Bed from "./Bed";
+import { Cage } from "./Pet";
 
 export interface Plot {
     createdAt: string;          // ISO date string format
@@ -20,8 +21,7 @@ export interface Plot {
     createdById: number;        // ID of the user who created this plot
     updatedById: number;        // ID of the user who last updated this plot
     farm_id: string | null;     // ID of the farm if applicable, null if none
-    bed:Bed[]
+    bed: Bed[]
+    cage_id: Cage[]
 
-
-    // You can add more methods to manipulate the data if needed
 }

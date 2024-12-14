@@ -1,17 +1,36 @@
-import CropVariety from "./CropVariety";
-import { Plot } from "./Plot";
 
-export default interface Bed {
-    id?:string,
-    expected_harvest_yield: number,
-    flowering_date: Date,
-    crop_variety: CropVariety,
-    crop_variety_id?:string,
-    plot: Plot,
-    length: number,
-    harvest_date: Date,
-    planting_date:Date,
-    width: number,
-    bed_number:number,
-    status:string
+export interface Bed {
+    createdAt: string;
+    updatedAt: string;
+    harvest_date: string | null;
+    planting_date: string | null;
+    id: string;
+    width: number;
+    length: number;
+    bed_number: number;
+    createdById: number | null;
+    updatedById: number | null;
+    crop_variety_id: string | null;
+    plot_id: string;
+    type: "cage" | "bed"
+    status: "new" | "prepare" | "using" | "harvest"
+    bed_plant_history_id: bed_plant_history_id[]
+}
+export interface bed_plant_history_id {
+    createdAt: string;
+    updatedAt: string;
+    id: number;
+    createdById: number | null;
+    updatedById: number | null;
+    product_id: number;
+    quantity: number;
+    type: string;
+    bed_id: string;
+    product_type: string;
+    product_value_expected: number;
+    product_value_reality: number | null;
+    product_value_uom_id: number;
+    status: string;
+    start_time: string | null;
+    product_time: string | null;
 }

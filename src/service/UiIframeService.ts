@@ -1,15 +1,18 @@
 import Bed from "../entity/Bed";
-import { listCrops, confirmPlant, baseUrl, error, bedDetail, login, register, profile, plotDetail, wallet, success } from "../helper/ui/Iframe";
+import { listCrops, confirmPlant, baseUrl, error, bedDetail, login, register, profile, plotDetail, wallet, success, listChickens, confirmBuyChicken } from "../helper/ui/Iframe";
 import { UIWebsite } from "@workadventure/iframe-api-typings";
 
-class IframeService {
+class UiIframeService {
     //notificate
     private iframeError: UIWebsite | null
     private iframeSuccess: UIWebsite | null
-
-
-    private iframeListCrop: UIWebsite | null
+    //list
+    private iframeListCrops: UIWebsite | null
+    private iframeListChickens: UIWebsite | null
+    //confirm
     private iframeConfirmPlant: UIWebsite | null
+    private iframeConfirmBuyChicken: UIWebsite | null
+
     private iframeBaseUrl: UIWebsite | null
     private iframeBedDetail: UIWebsite | null
     private iframeLogin: UIWebsite | null
@@ -19,7 +22,9 @@ class IframeService {
     private iframeWallet: UIWebsite | null
 
     constructor() {
-        this.iframeListCrop = null
+        this.iframeListCrops = null
+        this.iframeListChickens = null
+        this.iframeConfirmBuyChicken = null
         this.iframeConfirmPlant = null
         this.iframeBaseUrl = null
         this.iframeError = null
@@ -32,7 +37,13 @@ class IframeService {
         this.iframeSuccess = null
         this.initVariable()
         this.subscribeVariableChange()
+    }
 
+    async openWebsiteBaseUrl() {
+        this.closeBaseUrl()
+        return this.iframeBaseUrl = await WA.ui.website.open(
+            baseUrl()
+        );
     }
     async openWallet() {
         this.closeWallet()
@@ -64,25 +75,33 @@ class IframeService {
             register()
         );
     }
-    async openListCrop() {
-        this.closeListCrop()
-        this.iframeListCrop = await WA.ui.website.open(
+    //list
+    async openListCrops() {
+        this.closeListCrops()
+        this.iframeListCrops = await WA.ui.website.open(
             listCrops()
         );
     }
-
+    async openListChickens() {
+        this.closeListChickens()
+        this.iframeListChickens = await WA.ui.website.open(
+            listChickens()
+        );
+    }
+    //confirm
     async openConfirmPlant(varietyId: string) {
         this.closeConfirmPlant()
         this.iframeConfirmPlant = await WA.ui.website.open(
             confirmPlant(varietyId)
         );
     }
-    async openWebsiteBaseUrl() {
-        this.closeBaseUrl()
-        return this.iframeBaseUrl = await WA.ui.website.open(
-            baseUrl()
+    async openConfirmBuyChicken(chickenId: string) {
+        this.closeConfirmBuyChicken()
+        this.iframeConfirmBuyChicken = await WA.ui.website.open(
+            confirmBuyChicken(chickenId)
         );
     }
+    //notificate
     async openError(message: string) {
         this.closeError()
         this.iframeError = await WA.ui.website.open(
@@ -107,15 +126,24 @@ class IframeService {
     closeLogin() {
         this.iframeLogin?.close()
     }
-    closeListCrop() {
-        this.iframeListCrop?.close()
+    //list
+    closeListCrops() {
+        this.iframeListCrops?.close()
     }
+    closeListChickens() {
+        this.iframeListChickens?.close()
+    }
+    //confirm
     closeConfirmPlant() {
         this.iframeConfirmPlant?.close()
+    }
+    closeConfirmBuyChicken() {
+        this.iframeConfirmBuyChicken?.close()
     }
     closeBaseUrl() {
         this.iframeBaseUrl?.close()
     }
+    //notificate
     closeError() {
         this.iframeError?.close()
     }
@@ -138,11 +166,10 @@ class IframeService {
         //notificate
         WA.player.state.saveVariable("openError", false)
         WA.player.state.saveVariable("openSuccess", false)
-
-
-
-        WA.player.state.saveVariable("openConfirmPlant", false)
+        //list
         WA.player.state.saveVariable("openListCrops", false)
+        WA.player.state.saveVariable("openListChickens", false)
+
         WA.player.state.saveVariable("openBedDetail", false)
         WA.player.state.saveVariable("openLogin", false)
         WA.player.state.saveVariable("openRegister", false)
@@ -150,7 +177,9 @@ class IframeService {
         WA.player.state.saveVariable("openPlotDetail", false)
         WA.player.state.saveVariable("openWallet", false)
 
-
+        //confirm
+        WA.player.state.saveVariable("openConfirmPlant", false)
+        WA.player.state.saveVariable("openConfirmBuyChicken", false)
     }
     private subscribeVariableChange() {
         //notificate
@@ -176,11 +205,19 @@ class IframeService {
         WA.player.state.onVariableChange("openRegister").subscribe((e) => {
             e ? this.openRegister() : this.closeRegister()
         })
+        //confirm
         WA.player.state.onVariableChange("openConfirmPlant").subscribe((e) => {
             e ? this.openConfirmPlant(WA.player.state.varietyId as string) : this.closeConfirmPlant()
         })
+        WA.player.state.onVariableChange("openConfirmBuyChicken").subscribe((e) => {
+            e ? this.openConfirmBuyChicken(WA.player.state.chickenId as string) : this.closeConfirmBuyChicken()
+        })
+        //list
         WA.player.state.onVariableChange("openListCrops").subscribe((e) => {
-            e ? this.openListCrop() : this.closeListCrop()
+            e ? this.openListCrops() : this.closeListCrops()
+        })
+        WA.player.state.onVariableChange("openListChickens").subscribe((e) => {
+            e ? this.openListChickens() : this.closeListChickens()
         })
         WA.player.state.onVariableChange("openBedDetail").subscribe((e) => {
             e ? this.openBedDetail((WA.player.state.bed as Bed).id as string) : this.closeBedDetail()
@@ -188,5 +225,5 @@ class IframeService {
 
     }
 }
-const iframeService = new IframeService()
+const iframeService = new UiIframeService()
 export default iframeService
