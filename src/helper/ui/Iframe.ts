@@ -1,8 +1,5 @@
 import { createUIWebsite } from "../Helper";
 const IFRAME_URL = import.meta.env.VITE_IFRAME_URL
-
-
-
 export function listCrops() {
     let width = "70vw"
     let height = "75vh"
@@ -23,10 +20,38 @@ export function listCrops() {
         default:
             break;
     }
-    console.log(width);
     return createUIWebsite(
         "listCrops",
-        IFRAME_URL + "/crop",
+        IFRAME_URL + "/crops",
+        vertical,
+        horizontal,
+        width,
+        height
+    )
+}
+export function listChickens() {
+    let width = "70vw"
+    let height = "75vh"
+    let vertical = "middle" as "middle" | "top" | "bottom"
+    let horizontal = "middle" as "middle" | "left" | "right"
+    const screenSize = WA.player.state.screen
+    switch (screenSize) {
+        case "mobile":
+            width = "98vw"
+            height = "80vh"
+            vertical = "top"
+            break;
+        case "tablet":
+            break;
+        case "desktop":
+            vertical = "middle"
+            break;
+        default:
+            break;
+    }
+    return createUIWebsite(
+        "listChickens",
+        IFRAME_URL + "/chickens",
         vertical,
         horizontal,
         width,
@@ -56,13 +81,45 @@ export function confirmPlant(varietyId: string) {
         default:
             break;
     }
-    // console.log(screenSize);
-
-    // console.log(width);
-
     return createUIWebsite(
         "confirmPlant",
         IFRAME_URL + `/confirm/plant/${varietyId}`,
+        vertical,
+        horizontal,
+        width,
+        height,
+        true, // visible is true by default, but you can pass it explicitly if needed
+        true, // allowApi is true by default
+        "", // allowPolicy is empty string by default
+        margin
+    )
+}
+export function confirmBuyChicken(chickenId: string) {
+    let width = "40vw"
+    let height = "85vh"
+    let vertical = "middle" as "middle" | "top" | "bottom"
+    let horizontal = "middle" as "middle" | "left" | "right"
+    let margin = {
+        bottom: "100px"
+    }
+    // let allowPolicy="allowPolicy"
+    const screenSize = WA.player.state.screen
+    switch (screenSize) {
+        case "mobile":
+            width = "98vw"
+            height = "75vh"
+            break;
+        case "tablet":
+            width = "90vw"
+            break;
+        case "desktop":
+            break;
+        default:
+            break;
+    }
+    return createUIWebsite(
+        "confirmBuyChicken",
+        IFRAME_URL + `/confirm/chicken/${chickenId}`,
         vertical,
         horizontal,
         width,
@@ -146,8 +203,8 @@ export function success(message: string) {
     )
 }
 export function bedDetail(bedId: string) {
-    let width = "70vw"
-    let height = "90vh"
+    let width = "35vw"
+    let height = "60vh"
     let vertical = "top" as "middle" | "top" | "bottom"
     let horizontal = "middle" as "middle" | "left" | "right"
     const screenSize = WA.player.state.screen
@@ -314,9 +371,7 @@ export function plotDetail(plotId: string) {
         default:
             break;
     }
-    // console.log(screenSize);
 
-    // console.log(width);
 
     return createUIWebsite(
         "confirmPlant",
@@ -354,10 +409,7 @@ export function wallet() {
         default:
             break;
     }
-    // console.log(screenSize);
-
-    // console.log(width);
-
+  
     return createUIWebsite(
         "wallet",
         IFRAME_URL + `/wallet`,

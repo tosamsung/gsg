@@ -1,5 +1,5 @@
 import ApiManager from "../api/ApiManager";
-import {ResponsePlotRegister } from "../entity/Other";
+import { ResponsePlotRegister } from "../entity/Response";
 
 export default class plotService {
     apiManager: ApiManager
@@ -21,19 +21,18 @@ export default class plotService {
                         const updatedRequest = response.data as ResponsePlotRegister;
 
                         if (updatedRequest.status !== "new") {
-                            resolve(updatedRequest); 
+                            resolve(updatedRequest);
                             return;
                         }
 
                         if (attempts >= maxAttempts) {
-                            reject(new Error("Request vẫn đang xử lý sau 3 lần thử.")); 
+                            reject(new Error("Request vẫn đang xử lý sau 3 lần thử."));
                             return;
                         }
                         attempts++;
-                        console.log(`Thử lần ${attempts}, trạng thái: ${updatedRequest.status}`);
-                        setTimeout(() => checkStatus(id), delay); 
+                        setTimeout(() => checkStatus(id), delay);
                     }).catch((error) => {
-                        reject(new Error(`Lỗi khi gọi API: ${error.message}`)); 
+                        reject(new Error(`Lỗi khi gọi API: ${error.message}`));
                     });
                 };
                 checkStatus(requestPlotRegister.id);
@@ -43,23 +42,30 @@ export default class plotService {
         });
     }
 
-
+    getPlotsByGroupNumber(groupNumber: number) {
+        const farmId = localStorage.getItem("farm") as number | null
+        if (farmId) {
+            return this.apiManager.getPlotsByGroupNumberAndFarmId(groupNumber, farmId)
+        }else{
+            throw new Error("Farm id null");
+        }
+    }
     getPlotByIdPrunedData(id: string) {
         return this.apiManager.getPlotByIdPrunedData(id)
     }
-    getAllPlotByColsAndRow(colStart: number, colEnd: number, rowStart: number, rowEnd: number) {
-        return this.apiManager.getAllPlotByColsAndRow(colStart, colEnd, rowStart, rowEnd)
-    }
-    getPlotByColAndRow(col: number, row: number) {
-        return this.apiManager.getPlotByColAndRow(col, row)
-    }
+    // getAllPlotByColsAndRow(colStart: number, colEnd: number, rowStart: number, rowEnd: number) {
+    //     return this.apiManager.getAllPlotByColsAndRow(colStart, colEnd, rowStart, rowEnd)
+    // }
+    // getPlotByColAndRow(col: number, row: number) {
+    //     return this.apiManager.getPlotByColAndRow(col, row)
+    // }
     getPlotByPlotNumber(plotNumber: string) {
         return this.apiManager.getPlotByPlotNumber(plotNumber)
     }
-    getPlotByColAndRowPrunedData(col: number, row: number) {
-        return this.apiManager.getPlotByColAndRowPrunedData(col, row)
-    }
-    getAllPlotByColsAndRowPrunedData(colStart: number, colEnd: number, rowStart: number, rowEnd: number) {
-        return this.apiManager.getAllPlotByColsAndRowPrunedData(colStart, colEnd, rowStart, rowEnd)
-    }
+    // getPlotByColAndRowPrunedData(col: number, row: number) {
+    //     return this.apiManager.getPlotByColAndRowPrunedData(col, row)
+    // }
+    // getAllPlotByColsAndRowPrunedData(colStart: number, colEnd: number, rowStart: number, rowEnd: number) {
+    //     return this.apiManager.getAllPlotByColsAndRowPrunedData(colStart, colEnd, rowStart, rowEnd)
+    // }
 }

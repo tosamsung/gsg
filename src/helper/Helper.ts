@@ -1,8 +1,8 @@
-import { Area } from "../entity/Other";
+import { Area, MyTileDescriptor } from "../entity/Other";
 import { Coordinate } from "../entity/Other";
 import { MovementState } from "../entity/Other";
-import  iframeService  from "../service/IframeService";
-import { CreateEmbeddedWebsiteEvent, UIWebsiteEvent } from "@workadventure/iframe-api-typings";
+import iframeService from "../service/UiIframeService";
+import { CreateEmbeddedWebsiteEvent, TileDescriptor, UIWebsiteEvent } from "@workadventure/iframe-api-typings";
 
 export async function createArea(area: Area, name: string, property?: Map<string, string | number | boolean | undefined>) {
     WA.room.area.create({
@@ -29,10 +29,6 @@ export function subscribeOnEnterArea(name: string, callback: () => void) {
 
     WA.room.area.onEnter(name).subscribe().unsubscribe()
     WA.room.area.onEnter(name).subscribe(callback)
-    // WA.room.area.onEnter(name).subscribe(()=>{
-    //     console.log(1);
-
-    // })
 
 }
 export function subscribeOnLeaveArea(name: string, callback: () => void) {
@@ -53,23 +49,26 @@ export function extractNumberFromString(input: string): number | null {
 export function createEmbedWebsite(
     name: string,
     url: string,
-    x: number,
-    y: number,
-    height: number,
-    width: number,
-    scale: number
+    area: Area,
+    scale: number,
+    visible?: boolean,
+    allowApi?: boolean,
+    allow?: string,
+    origin?: "player" | "map"
 ): CreateEmbeddedWebsiteEvent {
     return {
         name: name,
         url: url,
         position: {
-            x: x,
-            y: y,
-            width: width,
-            height: height,
+            x: area.coordinate.x,
+            y: area.coordinate.y,
+            width: area.width,
+            height: area.height,
         },
-        visible: true,
-        allowApi: true,
+        visible: visible ?? true,
+        allowApi: allowApi ?? true,
+        allow: allow,
+        origin: origin,
         scale: scale,
     };
 }
@@ -111,7 +110,6 @@ export function createUIWebsite(
 
 export function teleportByLastDirection(pixel: number): void {
     const playerMoved: MovementState = JSON.parse(localStorage.getItem("playerPosition") || "{}");
-    // console.log(playerMoved);
 
     switch (playerMoved.direction) {
         case "left":
@@ -129,15 +127,29 @@ export function teleportByLastDirection(pixel: number): void {
     }
 }
 export function teleportPlayerTo(coordinate: Coordinate): void {
-    // console.log(playerMoved);
     WA.player.teleport(coordinate.x, coordinate.y)
 }
 
 
 export function checkDeviceScreen() {
-    const embedWebsiteService =iframeService
+    const embedWebsiteService = iframeService
     embedWebsiteService.openWebsiteBaseUrl().then(() => {
         embedWebsiteService.closeBaseUrl()
-
     })
+}
+export function createTilesDescriptor(coordinate: Coordinate, tileDescriptor: MyTileDescriptor, layer: string) {
+    const tilesets = [] as TileDescriptor[]
+    for (let row = 0; row < tileDescriptor.rows; row++) {
+        for (let col = 0; col < tileDescriptor.cols; col++) {            
+            tilesets.push({
+                x: coordinate.x + col,
+                y: coordinate.y + row,
+                layer: layer,
+                tile: tileDescriptor.tilesets[row][col]
+            })
+
+        }
+    }
+    
+    return tilesets
 }

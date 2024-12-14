@@ -6,85 +6,111 @@ import { Area, PlotArea } from "../entity/Other";
 import settings from "../settings/settings.json"
 import BedController from "./BedController";
 import { ResponsePlotRegister } from "../entity/Response";
+import CageController from "./CageController";
 const PLOT = settings.plot
+const TILE_SIZE = settings.tile_size
 //----
 export default class PlotController {
-    private bedController: BedController | null
+    private bedController: BedController
     private plotService: plotService
-    private colPerLand: number
-    constructor(bedController?: BedController) {
-        this.bedController = bedController ? bedController : null
+    private cageController: CageController
+    constructor(bedController: BedController, cageController: CageController) {
+        this.bedController = bedController
+        this.cageController = cageController
         this.plotService = new plotService();
-        this.colPerLand = 2
         this.initVariable()
         this.subscribeVariableChange()
     }
 
-    createPlotsInLand(landNumber: number) {
-        const landInfo = this.getLandInfo(landNumber)
-        return this.plotService.getAllPlotByColsAndRowPrunedData(landInfo.colStart, landInfo.colEnd, landInfo.rowStart, landInfo.rowEnd)
-            .then((response: any) => {
-                const data = response.data;
-                const plotsToShow: Map<string, Plot> = new Map;
-                data.forEach((plot: Plot) => {
-                    const plotName = "plot" + this.getPlotNumberInLand(plot.column, plot.row, landNumber);
-                    plotsToShow.set(plotName, plot);
-                });
+    createPlotsInLand(landNumber: number): Promise<PlotArea[]> {
+        return this.plotService.getPlotsByGroupNumber(landNumber).then((response: any) => {
+            return response.data;
+        }).then((data) => {
+            const rows = 3;
+            const bigColumns = 2;
+            const columns = 2;
+            let arrayIndex = 0;
+            let index = 0;
+            const plotAreas: PlotArea[] = [];
+            let startX = PLOT.start_coordinate.x;
+            const startY = PLOT.start_coordinate.y;
 
-                for (let i = 1; i <= 12; i++) {
-                    const plotName = "plot" + i;
-                    if (!plotsToShow.get(plotName)) {
-                        WA.room.hideLayer("plots/" + plotName);
-                    } else if (plotsToShow.get(plotName)) {
-                        const columnsPerRow = 2;
+            const calculateCoordinates = (col: number, row: number) => ({
+                x: (startX + (PLOT.margin_right + PLOT.width) * col) * TILE_SIZE,
+                y: (startY + (PLOT.margin_bottom + PLOT.height) * row) * TILE_SIZE,
+            });
 
-                        const columnIndex = (i - 1) % columnsPerRow;
-                        const rowIndex = Math.floor((i - 1) / columnsPerRow);
+            for (let bigCol = 0; bigCol < bigColumns; bigCol++) {
+                const offsetY = bigCol * rows;
 
-                        const x = (PLOT.start_coordinate.x + (PLOT.margin_right + PLOT.width) * columnIndex) * 32;
-                        const y = (PLOT.start_coordinate.y + (PLOT.margin_bottom + PLOT.height) * rowIndex) * 32;
+                for (let row = 0; row < rows; row++) {
+                    for (let col = 0; col < columns; col++) {
+                        const currentRow = row + 1 + offsetY;
+                        const currentCol = col + 1;
 
-                        this.createPlotArea({
-                            plotArea: {
-                                coordinate: {
-                                    x: x + 20,
-                                    y: y + 20,
+                        if (data[arrayIndex]?.row === currentRow && data[arrayIndex]?.column === currentCol) {
+                            const { x, y } = calculateCoordinates(col, row);
+                            const plotData = data[arrayIndex];
+
+                            // Add plot area
+                            plotAreas.push({
+                                area: {
+                                    coordinate: { x: Math.floor(x / TILE_SIZE), y: Math.floor(y / TILE_SIZE) },
+                                    width: PLOT.width,
+                                    height: PLOT.height,
                                 },
-                                width: PLOT.width * 32 - 20,
-                                height: PLOT.height * 32 - 20,
-                            },
-                            plot: plotsToShow.get(plotName)!,
-                            index: i
-                        });
+                                plot: plotData,
+                                index: arrayIndex,
+                            });
+
+                            // Create plot area
+                            this.createPlotArea({
+                                area: {
+                                    coordinate: {
+                                        x: x + PLOT.area_relative.coordinate.x,
+                                        y: y + PLOT.area_relative.coordinate.y,
+                                    },
+                                    width: PLOT.width * TILE_SIZE + PLOT.area_relative.width,
+                                    height: PLOT.height * TILE_SIZE + PLOT.area_relative.height,
+                                },
+                                plot: plotData,
+                                index: arrayIndex + 1,
+                            });
+
+                            arrayIndex++;
+                        } else {
+                            WA.room.hideLayer(`plots/plot${index + 1}`);
+                        }
+
+                        index++;
                     }
                 }
 
-                return { data: data }
-            })
-            .catch((error) => {
-                console.error("Error fetching plot data:", error);
-            });
+                // Update starting X coordinate for the next big column
+                startX += PLOT.width * 2 + PLOT.margin_right * 2;
+            }
+
+            return plotAreas;
+        });
+
     }
+
     private createPlotArea(plotArea: PlotArea) {
-        const area = plotArea.plotArea
+        const area = plotArea.area
         const plot = plotArea.plot
         const plotIndex = plotArea.index
         createArea(area, plot.plot_number)
         subscribeOnEnterArea(plot.plot_number, () => {
             WA.player.state.plot = plot
+            console.log(plot.plot_number);
             WA.player.state.plotIndex = plotIndex
             WA.player.state.plotArea = area
             if (plot.status == "using") {
                 if (plot.owner_id !== WA.player.state.id) {
-
                     teleportByLastDirection(24)
-                } else {
-                    console.log("is mine");
-                    console.log(WA.player.state.plotArea);
                 }
-
             } else {
-                WA.player.state.saveVariable("openPlotDetail", (WA.player.state.plot as Plot).id)
+                WA.player.state.saveVariable("openPlotDetail", plot.id)
             }
         })
         subscribeOnLeaveArea(plot.plot_number, () => {
@@ -93,20 +119,25 @@ export default class PlotController {
             WA.player.state.plotArea = undefined
 
         })
-    }
-    private reloadPlotArea(plot: Plot) {
+    }   
+    private reloadPlotArea() {
+        const plot = WA.player.state.plot as Plot
         deleteArea(plot.plot_number).then(() => {
             this.createPlotArea({
-                plotArea: WA.player.state.plotArea as Area,
+                area: WA.player.state.plotArea as Area,
                 plot: plot,
                 index: WA.player.state.plotIndex as number
             });
             const plotCoordinate = (WA.player.state.plotArea as Area).coordinate
-            const pixelCoordinate = { x: Math.floor(plotCoordinate.x / 32), y: Math.floor(plotCoordinate.y / 32) }
-            this.bedController?.createEmptyBedAreaInPlot(
-                pixelCoordinate,
-                plot,
-                WA.player.state.landName as string)
+            const pixelCoordinate = { x: Math.floor((plotCoordinate.x - 10) / TILE_SIZE), y: Math.floor((plotCoordinate.y - 10) / TILE_SIZE) }
+            const plotArea = {
+                area: {
+                    coordinate: pixelCoordinate
+                },
+                plot: plot
+            } as PlotArea
+            this.bedController.createBedsAreaInPlot(plotArea)
+            this.cageController.createCageArea(plotArea)
         })
     }
     private initVariable() {
@@ -119,83 +150,14 @@ export default class PlotController {
                     WA.player.state.saveVariable("openPlotDetail", false)
                     if (response.status == "success") {
                         WA.player.state.saveVariable("openSuccess", response.message)
-                        this.reloadPlotArea(response.plot)
-                    } else if (response.status == "fail_balance") {
+                        WA.player.state.plot = response.plot
+                        this.reloadPlotArea()
+                    } else {
                         WA.player.state.saveVariable("openError", response.message)
-
                     }
-                    console.log(response);
                 })
                 WA.player.state.saveVariable('registerPlot', false)
             }
         })
     }
-    // private getPlotPositionInLand(plotNumber: number, land: number) {
-    //     const plotIndex = plotNumber - 1;
-
-    //     let columnOffset = (land - 1) * 2;
-    //     if (land >= 10) {
-    //         columnOffset = (land - 10) * 2;
-    //     }
-
-    //     const column = (plotIndex % this.colPerLand) + 1 + columnOffset;
-
-    //     let row = Math.floor(plotIndex / this.colPerLand) + 1;
-    //     if (land >= 10) {
-    //         row += 6;
-    //     }
-
-    //     return { column, row };
-    // }
-    private getPlotNumberInLand(col: number, row: number, land: number) {
-        let columnOffset: number;
-
-        if (land === 19) {
-            if (col !== 14) {
-                throw new Error(`Invalid column ${col} for Land 19. Only column 14 is valid.`);
-            }
-
-            const plotIndex = (row - 1);
-            return plotIndex + 1;
-        }
-
-        if (land >= 10) {
-            columnOffset = (land - 10) * 2;
-        } else {
-            columnOffset = (land - 1) * 2;
-        }
-
-        const adjustedColumn = col - columnOffset;
-
-        if ((land !== 19 && (adjustedColumn < 1 || adjustedColumn > 2))) {
-            throw new Error(`Invalid column ${col} for Land ${land}.`);
-        }
-
-        const plotIndex = (row - 1) * this.colPerLand + (adjustedColumn - 1);
-        return plotIndex + 1;
-    }
-    private getLandInfo(land: number) {
-        let colStart: number, colEnd: number, rowStart: number, rowEnd: number;
-        if (land < 10) {
-            colStart = (land - 1) * 2 + 1;
-            colEnd = colStart + 1;
-            rowStart = 1;
-            rowEnd = 6;
-        } else if (land === 19) {
-            colStart = 14;
-            colEnd = 14;
-            rowStart = 1;
-            rowEnd = 6;
-        } else {
-            const landOffset = (land - 10) % 9;
-            colStart = landOffset * 2 + 1;
-            colEnd = colStart + 1;
-            rowStart = 7;
-            rowEnd = 12;
-        }
-
-        return { colStart, colEnd, rowStart, rowEnd };
-    }
-
-
 }
