@@ -1,180 +1,254 @@
 {
-    "plow": {
-        "width": 3,
-        "height": 2,
-        "plow1": [
-            [
-                "plow1.0",
-                "plow1.1",
-                "plow1.2"
-            ],
-            [
-                "plow1.3",
-                "plow1.4",
-                "plow1.5"
-            ]
-        ],
-        "plow2": [
-            [
-                "plow2.0",
-                "plow2.1",
-                "plow2.2"
-            ],
-            [
-                "plow2.3",
-                "plow2.4",
-                "plow2.5"
-            ]
-        ],
-        "plow3": [
-            [
-                "plow3.0",
-                "plow3.1",
-                "plow3.2"
-            ],
-            [
-                "plow3.3",
-                "plow3.4",
-                "plow3.5"
-            ]
-        ]
-    },
-    "chicken": {
-        "animation": {
-            "run": {
-                "width": 2,
-                "height": 1,
-                "_1": [
+    "16x16": {
+        "plow": {
+            "plow1": {
+                "cols": 3,
+                "rows": 2,
+                "tilesets": [
                     [
-                        "chicken_run1.0",
-                        "chicken_run1.1"
+                        "plow1.0",
+                        "plow1.1",
+                        "plow1.2"
+                    ],
+                    [
+                        "plow1.3",
+                        "plow1.4",
+                        "plow1.5"
                     ]
                 ],
-                "_2": [
+                "relative_coordinate": {
+                    "x": 0,
+                    "y": 0
+                }
+            },
+            "plow2": {
+                "cols": 3,
+                "rows": 2,
+                "tilesets": [
                     [
-                        "chicken_run2.0",
-                        "chicken_run2.1"
+                        "plow2.0",
+                        "plow2.1",
+                        "plow2.2"
+                    ],
+                    [
+                        "plow2.3",
+                        "plow2.4",
+                        "plow2.5"
                     ]
-                ]
+                ],
+                "relative_coordinate": {
+                    "x": 5,
+                    "y": 1
+                }
+            },
+            "plow3": {
+                "cols": 3,
+                "rows": 2,
+                "tilesets": [
+                    [
+                        "plow3.0",
+                        "plow3.1",
+                        "plow3.2"
+                    ],
+                    [
+                        "plow3.3",
+                        "plow3.4",
+                        "plow3.5"
+                    ]
+                ],
+                "relative_coordinate": {
+                    "x": 2,
+                    "y": 2
+                }
+            }
+        },
+        "watering": {
+            "watering1": {
+                "cols": 3,
+                "rows": 2,
+                "tilesets": [
+                    [
+                        "watering1.0",
+                        "watering1.1",
+                        "watering1.2"
+                    ],
+                    [
+                        "watering1.3",
+                        "watering1.4",
+                        "watering1.5"
+                    ]
+                ],
+                "relative_coordinate": {
+                    "x": 0,
+                    "y": 0
+                }
+            },
+            "watering2": {
+                "cols": 3,
+                "rows": 2,
+                "tilesets": [
+                    [
+                        "watering2.0",
+                        "watering2.1",
+                        "watering2.2"
+                    ],
+                    [
+                        "watering2.3",
+                        "watering2.4",
+                        "watering2.5"
+                    ]
+                ],
+                "relative_coordinate": {
+                    "x": 5,
+                    "y": 1
+                }
+            },
+            "watering3": {
+                "cols": 3,
+                "rows": 2,
+                "tilesets": [
+                    [
+                        "watering3.0",
+                        "watering3.1",
+                        "watering3.2"
+                    ],
+                    [
+                        "watering3.3",
+                        "watering3.4",
+                        "watering3.5"
+                    ]
+                ],
+                "relative_coordinate": {
+                    "x": 2,
+                    "y": 2
+                }
+            }
+        },
+        "chicken": {
+            "meat": {
+                "run_1": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "meat_run1.0",
+                            "meat_run1.1"
+                        ]
+                    ]
+                },
+                "run_2": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "meat_run2.0",
+                            "meat_run2.1"
+                        ]
+                    ]
+                },
+                "eat_1": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "empty",
+                            "meat_eat1.0"
+                        ]
+                    ]
+                },
+                "eat_2": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "empty",
+                            "meat_eat2.0"
+                        ]
+                    ]
+                },
+                "eat_3": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "meat_eat1.0",
+                            "empty"
+                        ]
+                    ]
+                },
+                "eat_4": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "meat_eat2.0",
+                            "empty"
+                        ]
+                    ]
+                }
+            },
+            "egg": {
+                "run_1": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "egg_run1.0",
+                            "egg_run1.1"
+                        ]
+                    ]
+                },
+                "run_2": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "egg_run2.0",
+                            "egg_run2.1"
+                        ]
+                    ]
+                },
+                "eat_1": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "empty",
+                            "egg_eat1.0"
+                        ]
+                    ]
+                },
+                "eat_2": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "empty",
+                            "egg_eat2.0"
+                        ]
+                    ]
+                },
+                "eat_3": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "egg_eat1.0",
+                            "empty"
+                        ]
+                    ]
+                },
+                "eat_4": {
+                    "cols": 2,
+                    "rows": 1,
+                    "tilesets": [
+                        [
+                            "egg_eat2.0",
+                            "empty"
+                        ]
+                    ]
+                }
             }
         }
-    },
-    "tomato": {
-        "_1": [
-            "tomato1"
-        ],
-        "_2": [
-            "tomato2"
-        ],
-        "_3": [
-            "tomato3",
-            "tomato3.1"
-        ],
-        "_4": [
-            "tomato4",
-            "tomato4.1"
-        ]
-    },
-    "chili_pepper": {
-        "_1": [
-            "pepper1"
-        ],
-        "_2": [
-            "pepper2"
-        ],
-        "_3": [
-            "pepper3",
-            "pepper3.1"
-        ],
-        "_4": [
-            "pepper4",
-            "pepper4.1"
-        ]
-    },
-    "corn": {
-        "_1": [
-            "corn1"
-        ],
-        "_2": [
-            "corn2"
-        ],
-        "_3": [
-            "corn3",
-            "corn3.1"
-        ],
-        "_4": [
-            "corn4",
-            "corn4.1"
-        ]
-    },
-    "cucumber": {
-        "_1": [
-            "cucumber1"
-        ],
-        "_2": [
-            "cucumber2"
-        ],
-        "_3": [
-            "cucumber3"
-        ],
-        "_4": [
-            "cucumber4"
-        ]
-    },
-    "potato": {
-        "_1": [
-            "potato1"
-        ],
-        "_2": [
-            "potato2"
-        ],
-        "_3": [
-            "potato3"
-        ],
-        "_4": [
-            "potato4"
-        ]
-    },
-    "melon": {
-        "_1": [
-            "melon1"
-        ],
-        "_2": [
-            "melon2"
-        ],
-        "_3": [
-            "melon3"
-        ],
-        "_4": [
-            "melon4"
-        ]
-    },
-    "carrot": {
-        "_1": [
-            "carrot1"
-        ],
-        "_2": [
-            "carrot2"
-        ],
-        "_3": [
-            "carrot3"
-        ],
-        "_4": [
-            "carrot4"
-        ]
-    },
-    "cabbage": {
-        "_1": [
-            "cabbage1"
-        ],
-        "_2": [
-            "cabbage2"
-        ],
-        "_3": [
-            "cabbage2"
-        ],
-        "_4": [
-            "cabbage3"
-        ]
     }
 }

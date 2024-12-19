@@ -1,9 +1,9 @@
 import { Area } from "../../entity/Other"
-import { createEmbedWebsite } from "../Helper"
+import { createEmbedWebsite } from "../Utils"
 const IFRAME_URL = import.meta.env.VITE_IFRAME_URL
-export function bedButton(name: string) {
+export function bedButton(name: string, listButton: string ) {
     const NAME = name
-    const URL = IFRAME_URL + "/button/bed"
+    const URL = IFRAME_URL + "/button/bed" + "?button=" + listButton
     const AREA = {
         coordinate: {
             x: -60,
@@ -21,11 +21,11 @@ export function bedButton(name: string) {
 }
 export function cageButton(quantity?: number) {
     const NAME = "cageButton";
-    const URL = IFRAME_URL + "/button/cage?quantity=" + (quantity ?? 0); 
+    const URL = IFRAME_URL + "/button/cage?quantity=" + (quantity ?? 0);
     const AREA = {
         coordinate: {
-            x: -90,
-            y: -120
+            x: -110,
+            y: -70
         },
         width: 270,
         height: 150,

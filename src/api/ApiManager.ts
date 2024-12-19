@@ -1,5 +1,5 @@
 import HttpClient from "./HttpClient"
-import { RequestFarming, RequestPet } from "../entity/Request"
+import { RequestPlanting, RequestFeedingPet, RequestPet, RequestWatering } from "../entity/Request"
 import { Bed } from "../entity/Bed"
 
 const DIGIFORCE_DOMAIN = import.meta.env.VITE_DIGIFORCE_API_URL
@@ -26,7 +26,7 @@ export default class ApiManager {
         return this.httpDigiforce.get(URI, undefined, DIGIFORCE_API_KEY);
     }
     getPlotsByGroupNumberAndFarmId(groupNumber: number, farmId: number) {
-        const URI = `/plot:list?pageSize=20&sort[]=row&sort[]=column&appends[]=bed.bed_plant_history_id&appends[]=cage_id&appends[]=cage_id.pet_cages_id&appends[]=cage_id.pet_cages_id.pets&appends[]=bed&page=1&filter=%7B%22$and%22:[%7B%22group_number%22:%7B%22$eq%22:${groupNumber}%7D%7D,%7B%22farm_id%22:%7B%22$eq%22:${farmId}%7D%7D]%7D`
+        const URI = `/plot:list?pageSize=20&sort[]=row&sort[]=column&appends[]=bed.bed_plant_history_id&appends[]=cage_id&appends[]=cage_id.pet_cages_id&appends[]=cage_id.pet_cages_id.pets&appends[]=bed&page=1&filter=%7B%22$and%22:[%7B%22group_number%22:%7B%22$eq%22:${groupNumber}%7D%7D,%7B%22farm_id%22:%7B%22$eq%22:${farmId}%7D%7D]%7D&appends[]=bed.bed_plant_history_id.product.crop_id.growth_stages.phase&appends[]=bed.bed_plant_history_id.product.crop_id.growth_stages.tileset&appends[]=bed.bed_plant_history_id.product.crop_id.id`
         return this.httpDigiforce.get(URI, undefined, DIGIFORCE_API_KEY);
     }
     updatePlot(plot: any) {
@@ -43,16 +43,20 @@ export default class ApiManager {
         return this.httpDigiforce.post(URI, { plot_id: plotId }, 'application/json', DIGIFORCE_API_KEY);
     }
     getRequestRegisterPlotById(requestId: string) {
-        const URI = `/plot_register_history:get?filterByTk=${requestId}&appends[]=plot&appends[]=plot.bed`
+        const URI = `/plot_register_history:get?filterByTk=${requestId}&appends[]=plot&appends[]=plot.bed&appends[]=plot.bed.bed_plant_history_id`
         return this.httpDigiforce.get(URI, undefined, DIGIFORCE_API_KEY);
     }
     //request farming
-    createRequestPlanting(requestFarming: RequestFarming) {
+    createRequestPlanting(requestFarming: RequestPlanting) {
         const URI = `/farming_history:create`
         return this.httpDigiforce.post(URI, requestFarming, 'application/json', DIGIFORCE_API_KEY);
     }
-    getRequestPlantingById(requestId: string) {
-        const URI = `/farming_history:get?filterByTk=${requestId}&appends[]=bed`
+    createRequestWatering(requestFarming: RequestWatering) {
+        const URI = `/farming_history:create`
+        return this.httpDigiforce.post(URI, requestFarming, 'application/json', DIGIFORCE_API_KEY);
+    }
+    getBedRequestById(requestId: string) {
+        const URI = `/farming_history:get?filterByTk=${requestId}&appends[]=bed&appends[]=bed.bed_plant_history_id`
         return this.httpDigiforce.get(URI, undefined, DIGIFORCE_API_KEY);
     }
     //request chicken
@@ -60,15 +64,15 @@ export default class ApiManager {
         const URI = `/farming_history:create`
         return this.httpDigiforce.post(URI, requestPet, 'application/json', DIGIFORCE_API_KEY);
     }
+    createRequestFeeding(requestFeedingPet: RequestFeedingPet) {
+        const URI = `/farming_history:create`
+        return this.httpDigiforce.post(URI, requestFeedingPet, 'application/json', DIGIFORCE_API_KEY);
+    }
     getRequestPetById(requestId: string) {
         const URI = `/farming_history:get?filterByTk=${requestId}&appends[]=bed&appends[]=bed.bed_plant_history_id`
         return this.httpDigiforce.get(URI, undefined, DIGIFORCE_API_KEY);
     }
     //user vs auth
-    getUserById(userId: number) {
-        const URI = `/users:get?filterByTk=${userId}&filter=%7B%7D`
-        return this.httpDigiforce.get(URI, undefined, DIGIFORCE_API_KEY);
-    }
     getWalletByUserId(id: number) {
         const URI = `/user_wallet:get?filter=%7B%0A%22user_id%22%3A${id}%0A%7D`
         return this.httpDigiforce.get(URI, undefined, DIGIFORCE_API_KEY)

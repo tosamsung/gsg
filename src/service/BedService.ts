@@ -1,5 +1,5 @@
-import Bed from "../entity/Bed";
 import ApiManager from "../api/ApiManager";
+import { Bed } from "../entity/Bed";
 
 export default class BedService {
     apiManager: ApiManager
@@ -11,21 +11,4 @@ export default class BedService {
     createBed(bed: Bed) {
         return this.apiManager.createBed(bed)
     }
-    isBedPlanted(bed: Bed): Promise<boolean> {
-        return this.apiManager
-            .getBedByBedNumberAndPlotId(bed.bed_number, bed.plot.id)
-            .then((response: any) => {
-                // Kiểm tra nếu luống đã được trồng
-                if (response && response.isPlanted) {
-                    return true;
-                }
-                return false;
-            })
-            .catch((error) => {
-                console.error("Error checking if bed is planted:", error);
-                return false; // Mặc định trả về false nếu có lỗi
-            });
-    }
-    
-
 }

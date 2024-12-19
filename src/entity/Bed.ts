@@ -1,3 +1,4 @@
+import { Product } from "./Product";
 
 export interface Bed {
     createdAt: string;
@@ -14,9 +15,9 @@ export interface Bed {
     plot_id: string;
     type: "cage" | "bed"
     status: "new" | "prepare" | "using" | "harvest"
-    bed_plant_history_id: bed_plant_history_id[]
+    bed_plant_history_id: BedHistory[]
 }
-export interface bed_plant_history_id {
+export interface BedHistory {
     createdAt: string;
     updatedAt: string;
     id: number;
@@ -30,7 +31,8 @@ export interface bed_plant_history_id {
     product_value_expected: number;
     product_value_reality: number | null;
     product_value_uom_id: number;
-    status: string;
+    status: "baby"|"growth"|"maturity"|"harvest"|"finished"|"prepare";
     start_time: string | null;
     product_time: string | null;
+    product:Product
 }

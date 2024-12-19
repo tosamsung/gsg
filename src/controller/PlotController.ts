@@ -1,6 +1,6 @@
 
 import plotService from "../service/PlotService";
-import { createArea, subscribeOnEnterArea, teleportByLastDirection, subscribeOnLeaveArea, deleteArea } from "../helper/Helper";
+import { createArea, subscribeOnEnterArea, teleportByLastDirection, subscribeOnLeaveArea, deleteArea } from "../helper/Utils";
 import { Plot } from "../entity/Plot";
 import { Area, PlotArea } from "../entity/Other";
 import settings from "../settings/settings.json"

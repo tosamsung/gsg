@@ -1,4 +1,4 @@
-import { createUIWebsite } from "../Helper";
+import { createUIWebsite } from "../Utils";
 const IFRAME_URL = import.meta.env.VITE_IFRAME_URL
 export function listCrops() {
     let width = "70vw"
@@ -59,8 +59,8 @@ export function listChickens() {
     )
 }
 export function confirmPlant(varietyId: string) {
-    let width = "70vw"
-    let height = "80vh"
+    let width = "40vw"
+    let height = "85vh"
     let vertical = "middle" as "middle" | "top" | "bottom"
     let horizontal = "middle" as "middle" | "left" | "right"
     let margin = {
@@ -322,7 +322,7 @@ export function register() {
     )
 }
 export function profile() {
-    let width = "60vw"
+    let width = "40vw"
     let height = "80vh"
     let vertical = "top" as "middle" | "top" | "bottom"
     let horizontal = "middle" as "middle" | "left" | "right"
@@ -357,7 +357,6 @@ export function plotDetail(plotId: string) {
     let margin = {
         bottom: "100px"
     }
-    // let allowPolicy="allowPolicy"
     const screenSize = WA.player.state.screen
     switch (screenSize) {
         case "mobile":
@@ -371,8 +370,6 @@ export function plotDetail(plotId: string) {
         default:
             break;
     }
-
-
     return createUIWebsite(
         "confirmPlant",
         IFRAME_URL + `/plot/${plotId}`,
@@ -409,10 +406,77 @@ export function wallet() {
         default:
             break;
     }
-  
     return createUIWebsite(
         "wallet",
         IFRAME_URL + `/wallet`,
+        vertical,
+        horizontal,
+        width,
+        height,
+        true, // visible is true by default, but you can pass it explicitly if needed
+        true, // allowApi is true by default
+        "", // allowPolicy is empty string by default
+        margin
+    )
+}
+export function confirmFeedingPrice() {
+    let width = "50vw"
+    let height = "60vh"
+    let vertical = "middle" as "middle" | "top" | "bottom"
+    let horizontal = "middle" as "middle" | "left" | "right"
+    let margin = {
+        bottom: "100px"
+    }
+    const screenSize = WA.player.state.screen
+    switch (screenSize) {
+        case "mobile":
+            width = "98vw"
+            height = "75vh"
+            break;
+        case "tablet":
+            break;
+        case "desktop":
+            break;
+        default:
+            break;
+    }
+    return createUIWebsite(
+        "confirmPlant",
+        IFRAME_URL + `/confirm/chicken/feeding`,
+        vertical,
+        horizontal,
+        width,
+        height,
+        true, // visible is true by default, but you can pass it explicitly if needed
+        true, // allowApi is true by default
+        "", // allowPolicy is empty string by default
+        margin
+    )
+}
+export function confirmWatering() {
+    let width = "50vw"
+    let height = "60vh"
+    let vertical = "middle" as "middle" | "top" | "bottom"
+    let horizontal = "middle" as "middle" | "left" | "right"
+    let margin = {
+        bottom: "100px"
+    }
+    const screenSize = WA.player.state.screen
+    switch (screenSize) {
+        case "mobile":
+            width = "98vw"
+            height = "75vh"
+            break;
+        case "tablet":
+            break;
+        case "desktop":
+            break;
+        default:
+            break;
+    }
+    return createUIWebsite(
+        "confirmWatering",
+        IFRAME_URL + `/confirm/watering`,
         vertical,
         horizontal,
         width,

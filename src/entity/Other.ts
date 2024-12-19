@@ -1,3 +1,4 @@
+import { Bed } from "./Bed";
 import { Plot } from "./Plot";
 
 export interface Coordinate {
@@ -31,8 +32,14 @@ export interface PlotArea {
     plot: Plot;
     index?: number;
 }
+export interface BedArea {
+    name: string
+    index: number
+    area: Area
+    bed: Bed
+}
 export interface MyTileDescriptor {
     cols: number;
     rows: number;
-    tilesets: string[][] | number[][] 
+    tilesets: string[][] | number[][]
 }

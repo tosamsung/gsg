@@ -1,4 +1,4 @@
-import { bedButton } from "../helper/ui/IframeArea"
+import { bedButton } from "../helper/ui/IframeRoom"
 
 const BED_BUTTON = "bedButton"
 
@@ -10,8 +10,8 @@ export default class RoomIframeService {
         this.initVariable()
         this.subscribeVariableChange()
     }
-    showListBedButton() {
-        WA.room.website.create(bedButton(BED_BUTTON));
+    showListBedButton(listButton: string) {
+        WA.room.website.create(bedButton(BED_BUTTON, listButton));
     }
 
     closeListBedButton() {

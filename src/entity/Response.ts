@@ -17,11 +17,11 @@ export interface ResponsePlotRegister {
 export interface ResponseFarmingRequest {
     updatedAt: string; // ISO Date string
     createdAt: string; // ISO Date string
-    status: string; // Add other possible statuses as needed
+    status: "new" | "pending" | "preparing" | "in_progress" | "completed" | "canceled" // Add other possible statuses as needed
     id: string; // UUID
     plot_id: string | null; // Optional Plot ID (UUID)
     bed_id: string; // UUID
-    action: string; // Add other possible actions as needed
+    action: "planting" | "watering" | "fertilizing" | "feeding" | "harvesting" | "raising" | "pet_watering"; // Add other possible actions as needed
     createdById: number; // User ID
     updatedById: number; // User ID
     user_id: number | null; // Optional User ID
@@ -31,6 +31,6 @@ export interface ResponseFarmingRequest {
     quantity: number | null; // Optional quantity
     uom_id: number | null; // Optional Unit of Measure ID
     cost: number | null; // Optional cost
-    bed:Bed|null;
+    bed: Bed ;
 
 }

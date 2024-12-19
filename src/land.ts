@@ -4,10 +4,9 @@ import { bootstrapExtra } from "@workadventure/scripting-api-extra";
 import PlotController from "./controller/PlotController";
 import BedController from "./controller/BedController";
 import "./settings/DefaultSetup"
-import { getLandNumberFromUrl } from "./helper/Helper";
+import { getLandNumberFromUrl } from "./helper/Utils";
 import { PlotArea } from "./entity/Other";
 import CageController from "./controller/CageController";
-import "./service/UiIframeService";
 const bedController = new BedController()
 const chickenController = new CageController()
 
