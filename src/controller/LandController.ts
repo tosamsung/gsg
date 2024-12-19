@@ -1,4 +1,4 @@
-import { createArea } from "../helper/Helper";
+import { createArea } from "../helper/Utils";
 import setting from "../settings/settings.json"
 const FIRST_ROW = setting.land.first_row
 const SECOND_ROW = setting.land.second_row

@@ -50,10 +50,10 @@
             "area_relative":{
                 "coordinate":{
                     "x": -10,
-                    "y": -10
+                    "y": -7
                 },
                 "width": 20,
-                "height": 30
+                "height": 25
             }
         },
         "cage": {
@@ -71,16 +71,6 @@
             },
             "width":-10,
             "height":-10
-        },
-        "bed_popup": {
-            "relative_coordinate": {
-                "x": 4,
-                "y": 11
-            },
-            "margin_right": 3,
-            "margin_bottom": 2,
-            "width": 6,
-            "height": 3
         },
         "start_coordinate": {
             "x": 10,

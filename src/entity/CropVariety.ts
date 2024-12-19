@@ -1,4 +1,6 @@
-export default interface CropVariety{
+import { MyTileDescriptor } from "./Other";
+
+export default interface CropVariety {
     createdAt: string; // ISO date string
     updatedAt: string; // ISO date string
     name: string;
@@ -37,4 +39,10 @@ export default interface CropVariety{
     advantages: string;
     points: number;
     expense: number;
+    tilseset: MyTileDescriptor
+    growth_stages:GrowthStages[]
+}
+export interface GrowthStages {
+    phase: string,
+    tileset: any
 }

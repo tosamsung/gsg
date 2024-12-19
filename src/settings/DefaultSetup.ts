@@ -1,8 +1,10 @@
 import { bootstrapExtra } from "@workadventure/scripting-api-extra/dist";
-import { checkDeviceScreen } from "../helper/Helper";
+import { checkDeviceScreen } from "../helper/Utils";
 import PlayerController from "../controller/PlayerController";
 import AuthController from "../controller/AuthController";
 import "../data/StaticData";
+import "../service/UiIframeService";
+
 const playerController = new PlayerController()
 const authController = new AuthController()
 WA.onInit().then(() => {

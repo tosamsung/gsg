@@ -1,6 +1,6 @@
 // plot.ts
 
-import Bed from "./Bed";
+import { Bed } from "./Bed";
 import { Cage } from "./Pet";
 
 export interface Plot {

@@ -1,5 +1,5 @@
-import Bed from "../entity/Bed";
-import { listCrops, confirmPlant, baseUrl, error, bedDetail, login, register, profile, plotDetail, wallet, success, listChickens, confirmBuyChicken } from "../helper/ui/Iframe";
+import { Bed } from "../entity/Bed";
+import { listCrops, confirmPlant, baseUrl, error, bedDetail, login, register, profile, plotDetail, wallet, success, listChickens, confirmBuyChicken, confirmFeedingPrice, confirmWatering } from "../helper/ui/Iframe";
 import { UIWebsite } from "@workadventure/iframe-api-typings";
 
 class UiIframeService {
@@ -12,6 +12,8 @@ class UiIframeService {
     //confirm
     private iframeConfirmPlant: UIWebsite | null
     private iframeConfirmBuyChicken: UIWebsite | null
+    private iframeConfirmFeedingPrice: UIWebsite | null
+    private iframeConfirmWatering: UIWebsite | null
 
     private iframeBaseUrl: UIWebsite | null
     private iframeBedDetail: UIWebsite | null
@@ -26,6 +28,7 @@ class UiIframeService {
         this.iframeListChickens = null
         this.iframeConfirmBuyChicken = null
         this.iframeConfirmPlant = null
+        this.iframeConfirmFeedingPrice = null
         this.iframeBaseUrl = null
         this.iframeError = null
         this.iframeBedDetail = null
@@ -35,6 +38,7 @@ class UiIframeService {
         this.iframePlotDetail = null
         this.iframeWallet = null
         this.iframeSuccess = null
+        this.iframeConfirmWatering = null
         this.initVariable()
         this.subscribeVariableChange()
     }
@@ -101,6 +105,18 @@ class UiIframeService {
             confirmBuyChicken(chickenId)
         );
     }
+    async openConfirmFeedingPrice() {
+        this.closeConfirmFeedingPrice()
+        this.iframeConfirmFeedingPrice = await WA.ui.website.open(
+            confirmFeedingPrice()
+        );
+    }
+    async openConfirmWatering() {
+        this.closeConfirmWatering()
+        this.iframeConfirmWatering = await WA.ui.website.open(
+            confirmWatering()
+        );
+    }
     //notificate
     async openError(message: string) {
         this.closeError()
@@ -140,6 +156,12 @@ class UiIframeService {
     closeConfirmBuyChicken() {
         this.iframeConfirmBuyChicken?.close()
     }
+    closeConfirmFeedingPrice() {
+        this.iframeConfirmFeedingPrice?.close()
+    }
+    closeConfirmWatering() {
+        this.iframeConfirmWatering?.close()
+    }
     closeBaseUrl() {
         this.iframeBaseUrl?.close()
     }
@@ -170,16 +192,20 @@ class UiIframeService {
         WA.player.state.saveVariable("openListCrops", false)
         WA.player.state.saveVariable("openListChickens", false)
 
-        WA.player.state.saveVariable("openBedDetail", false)
-        WA.player.state.saveVariable("openLogin", false)
-        WA.player.state.saveVariable("openRegister", false)
-        WA.player.state.saveVariable("openProfile", false)
+        //detail
         WA.player.state.saveVariable("openPlotDetail", false)
-        WA.player.state.saveVariable("openWallet", false)
-
+        WA.player.state.saveVariable("openBedDetail", false)
+        WA.player.state.saveVariable("openProfile", false)
         //confirm
         WA.player.state.saveVariable("openConfirmPlant", false)
         WA.player.state.saveVariable("openConfirmBuyChicken", false)
+        WA.player.state.saveVariable("openConfirmFeedingPrice", false)
+        WA.player.state.saveVariable("openConfirmWatering", false)
+
+        //other
+        WA.player.state.saveVariable("openLogin", false)
+        WA.player.state.saveVariable("openRegister", false)
+        WA.player.state.saveVariable("openWallet", false)
     }
     private subscribeVariableChange() {
         //notificate
@@ -211,6 +237,12 @@ class UiIframeService {
         })
         WA.player.state.onVariableChange("openConfirmBuyChicken").subscribe((e) => {
             e ? this.openConfirmBuyChicken(WA.player.state.chickenId as string) : this.closeConfirmBuyChicken()
+        })
+        WA.player.state.onVariableChange("openConfirmFeedingPrice").subscribe((e) => {
+            e ? this.openConfirmFeedingPrice() : this.closeConfirmFeedingPrice()
+        })
+        WA.player.state.onVariableChange("openConfirmWatering").subscribe((e) => {
+            e ? this.openConfirmWatering() : this.closeConfirmWatering()
         })
         //list
         WA.player.state.onVariableChange("openListCrops").subscribe((e) => {

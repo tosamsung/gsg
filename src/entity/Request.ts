@@ -10,7 +10,7 @@ export interface RequestPlotRegister {
     message: string;
     amount: number;
 }
-export interface RequestFarming {
+export interface RequestPlanting {
     bed_id: string,
     product: {
         id: number
@@ -24,4 +24,12 @@ export interface RequestPet {
     },
     quantity: number,
     action: "raising"
+}
+export interface RequestFeedingPet {
+    bed_id: string,
+    action: "feeding"
+}
+export interface RequestWatering {
+    bed_id: string,
+    action: "watering"
 }
